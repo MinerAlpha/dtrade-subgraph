@@ -1,3 +1,8 @@
+# generated files
+generated
+build
+
+
 # Logs
 logs
 *.log

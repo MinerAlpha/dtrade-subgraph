@@ -1,0 +1,119 @@
+# Dtrade is an aggregation entity
+type Dtrade @entity {
+  id: ID!
+  issuers: BigInt!
+  detHolders: BigInt!
+}
+
+# Transfer tracks this event from the dTrade.sol contract and various Synth.sol contracts
+type Transfer @entity {
+  id: ID!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  timestamp: BigInt!
+  block: BigInt!
+  source: String!
+}
+
+# Issued tracks this event from various Synth.sol instances
+type Issued @entity {
+  id: ID!
+  account: Bytes! # address
+  value: BigInt!
+  source: String!
+  timestamp: BigInt!
+  gasPrice: BigInt!
+  block: BigInt!
+}
+
+# An individual Issuer
+type Issuer @entity {
+  id: ID!
+}
+
+# An individual DET holder (always overridden with their latest information)
+type DETHolder @entity {
+  id: ID! # address of potential holder
+  account: String! # address
+  # last block where an event happened
+  block: BigInt!
+  timestamp: BigInt!
+  balanceOf: BigInt
+  # the following will be null before multicurrency (v2) release
+  collateral: BigInt
+  transferable: BigInt
+  initialDebtOwnership: BigInt
+  debtEntryAtIndex: BigInt
+  # number of claims performed
+  claims: BigInt
+  # number of mints performed
+  mints: BigInt
+}
+
+# A historical debt tracker
+type DebtSnapshot @entity {
+  id: ID!
+  # last block where an event happened
+  block: BigInt!
+  timestamp: BigInt!
+  account: Bytes! # address
+  balanceOf: BigInt # early on it was possible this wouldn't have a value (pre v2)
+  # the following will be null before multicurrency (v2) release
+  collateral: BigInt
+  debtBalanceOf: BigInt
+}
+
+type SynthHolder @entity {
+  id: ID! # address of the holder + the synth
+  synth: String! # the synth's currencyKey
+  balanceOf: BigInt!
+}
+
+# Burned tracks this event from various Synth.sol instances
+type Burned @entity {
+  id: ID!
+  account: Bytes! # address
+  value: BigInt! # uint256
+  source: String!
+  timestamp: BigInt!
+  gasPrice: BigInt!
+  block: BigInt!
+}
+
+# Tracks new dTrade, ExchangeRates and FeePool contracts
+type ContractUpdated @entity {
+  id: ID!
+  source: String!
+  target: Bytes! # address
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type RewardEscrowHolder @entity {
+  id: ID!
+  balanceOf: BigInt!
+}
+
+type FeesClaimed @entity {
+  id: ID!
+  account: Bytes! # address
+  value: BigInt! # uint256
+  rewards: BigInt! # uint256
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+type TotalActiveStaker @entity {
+  id: ID!
+  count: BigInt!
+}
+
+type TotalDailyActiveStaker @entity {
+  id: ID!
+  count: BigInt!
+}
+
+type ActiveStaker @entity {
+  id: ID!
+}

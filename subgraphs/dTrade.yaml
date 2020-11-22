@@ -1,0 +1,177 @@
+specVersion: 0.0.2
+description: dTrade Rinkeby API
+repository: https://github.com/dtradeorg/dtrade-subgraph
+schema:
+  file: ./dTrade.graphql
+dataSources:
+  # for the new Proxy
+  - kind: ethereum/contract
+    name: dTrade_viaNewProxy # will be ignored in our mapping but needs to be unique
+    network: rinkeby
+    source:
+      address: '0x8512EDEDb19fD937c3E9B71b71E7c487cA3Fe082' # new ProxyDtrade (ERC20)
+      abi: dTrade
+      startBlock: 7529516 # creation of this proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - Transfer
+      abis:
+        - name: dTrade
+          file: ../abis/dTrade.json
+        - name: AddressResolver
+          file: ../abis/AddressResolver.json
+        - name: dTradeState
+          file: ../abis/dTradeState.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferDET
+
+  # Handle Proxy target updated events on upcoming integration Proxy
+  - kind: ethereum/contract
+    name: ProxydTradeERC20
+    network: rinkeby
+    source:
+      address: '0x8512EDEDb19fD937c3E9B71b71E7c487cA3Fe082' # new ProxyDtrade (ERC20)
+      abi: Proxy # Requires Proxy ABI to get the TargetUpdated event
+      startBlock: 7529516 # creation of this proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - ProxyTargetUpdated
+      abis:
+        - name: Proxy
+          file: ../abis/Proxy.json
+      eventHandlers:
+        - event: TargetUpdated(address)
+          handler: handleProxyTargetUpdated
+
+  # Handle Transfer on upcoming ProxysUSD Integration proxy
+  - kind: ethereum/contract
+    name: SynthsUSD_viaNewProxy
+    network: rinkeby
+    source:
+      address: '0x626DAeEC0D90b02C7cC38eB317EBA7732FF68d22' # ProxyERC20sUSD (new ERC20 Proxy)
+      abi: Synth
+      startBlock: 7529541 # creation of this proxy
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - Transfer
+        - Issued
+        - Burned
+      abis:
+        - name: Synth
+          file: ../abis/Synth.json
+        - name: dTrade
+          file: ../abis/dTrade.json
+        - name: AddressResolver
+          file: ../abis/AddressResolver.json
+        - name: dTradeState
+          file: ../abis/dTradeState.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSynth
+        - event: Issued(indexed address,uint256)
+          handler: handleIssuedSynths
+        - event: Burned(indexed address,uint256)
+          handler: handleBurnedSynths
+
+  # Handle Transfer, Issued, Burned on current ProxysETH
+  - kind: ethereum/contract
+    name: SynthsETH
+    network: rinkeby
+    source:
+      address: '0xD67D03C3216e904C1F30beaD5F0915A94336c770' # ProxysETH (new ERC20 Proxy)
+      abi: Synth
+      startBlock: 7529603
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - Transfer
+        - Issued
+        - Burned
+      abis:
+        - name: Synth
+          file: ../abis/Synth.json
+        - name: dTrade
+          file: ../abis/dTrade.json
+        - name: AddressResolver
+          file: ../abis/AddressResolver.json
+        - name: dTradeState
+          file: ../abis/dTradeState.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransferSynth
+        - event: Issued(indexed address,uint256)
+          handler: handleIssuedSynths
+        - event: Burned(indexed address,uint256)
+          handler: handleBurnedSynths
+
+  # add definitions here for more synths (iBTC, iETH etc)
+
+  # Handle RewardEscrow Transfers (determine who has collected fees)
+  - kind: ethereum/contract
+    name: RewardEscrow
+    network: rinkeby
+    source:
+      address: '0xd1BF77946299C4671974B2257c6bEDd0783b6960' # RewardEscrow
+      abi: RewardEscrow
+      startBlock: 7529501
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - RewardEscrowHolder
+        - DETHolder
+      abis:
+        - name: RewardEscrow
+          file: ../abis/RewardEscrow.json
+        - name: dTrade
+          file: ../abis/dTrade.json
+        - name: AddressResolver
+          file: ../abis/AddressResolver.json
+        - name: dTradeState
+          file: ../abis/dTradeState.json
+      eventHandlers:
+        - event: VestingEntryCreated(indexed address,uint256,uint256)
+          handler: handleRewardVestEvent
+        - event: Vested(indexed address,uint256,uint256)
+          handler: handleRewardVestEvent
+
+  # Handle FeePool FeesClaimed
+  - kind: ethereum/contract
+    name: FeePool
+    network: rinkeby
+    source:
+      address: '0x234E4bFe4570a5b7740b9A5EeE14a57C82710De8' # ProxyFeePool
+      abi: FeePool
+      startBlock: 7529504
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/mapping.ts
+      entities:
+        - FeesClaimed
+        - DETHolder
+      abis:
+        - name: FeePool
+          file: ../abis/FeePool.json
+      eventHandlers:
+        - event: FeesClaimed(address,uint256,uint256)
+          handler: handleFeesClaimed
