@@ -16,7 +16,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - Transfer
       abis:
@@ -42,7 +42,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - ProxyTargetUpdated
       abis:
@@ -64,7 +64,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - Transfer
         - Issued
@@ -98,7 +98,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - Transfer
         - Issued
@@ -134,7 +134,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - RewardEscrowHolder
         - DETHolder
@@ -165,7 +165,7 @@ dataSources:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ../src/mapping.ts
+      file: ../src/dtrade-mapping.ts
       entities:
         - FeesClaimed
         - DETHolder
