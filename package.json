@@ -3,14 +3,18 @@
   "license": "MIT",
   "version": "1.0.1",
   "author": "dTrade-team",
+  "private": true,
   "scripts": {
     "lint": "eslint .",
     "codegen": "node prepare-abis && graph codegen",
     "codegen:dtrade": "npm run codegen -- subgraphs/dTrade.yaml",
+    "codegen:rates": "npm run codegen -- subgraphs/rates.yaml",
     "build": "graph build",
     "build:dtrade": "graph build subgraphs/dTrade.yaml",
+    "build:rates": "graph build subgraphs/rates.yaml",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token <THEGRAPH_ACCESS_TOKEN>",
-    "deploy:dtrade": "npm run deploy -- <ACCOUNT_NAME>/<SUBGRAPH_NAME> subgraphs/dTrade.yaml"
+    "deploy:dtrade": "npm run deploy -- <ACCOUNT_NAME>/<SUBGRAPH_NAME> subgraphs/dTrade.yaml",
+    "deploy:rates": "npm run deploy -- <ACCOUNT_NAME>/<SUBGRAPH_NAME> subgraphs/rates.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "git://github.com/graphprotocol/graph-cli.git#ebeeba0009f026bacf940f25ee7b875fe7676032",

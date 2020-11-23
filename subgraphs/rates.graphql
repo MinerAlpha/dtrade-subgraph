@@ -1,0 +1,42 @@
+# RatesUpdated tracks this event from the ExchangeRates.sol contract
+type RatesUpdated @entity {
+  id: ID!
+  from: Bytes! # address
+  currencyKeys: [Bytes!]! # bytes4[]
+  newRates: [BigInt!]! # uint256[]
+  gasPrice: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+# An individual RateUpdate - split out of RatesUpdated event
+type RateUpdate @entity {
+  id: ID!
+  currencyKey: Bytes!
+  synth: String!
+  rate: BigInt!
+  block: BigInt!
+  timestamp: BigInt!
+}
+
+# The average price of DET over a 15 minute period
+type FifteenMinuteDETPrice @entity {
+  id: ID!
+  count: BigInt!
+  averagePrice: BigInt!
+}
+
+# The average price of DET over a day
+type DailyDETPrice @entity {
+  id: ID!
+  count: BigInt!
+  averagePrice: BigInt!
+}
+
+type LatestRate @entity {
+  " Name of synth. E.g. sUSD "
+  id: ID!
+
+  " Synth USD rate with 18 decimals "
+  rate: BigInt!
+}
