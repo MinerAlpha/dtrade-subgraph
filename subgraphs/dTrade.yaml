@@ -8,9 +8,9 @@ dataSources:
     name: dTrade
     network: rinkeby
     source:
-      address: '0x8512EDEDb19fD937c3E9B71b71E7c487cA3Fe082' # new ProxyDtrade (ERC20)
+      address: '0x0DcD1Ee16084Eaf11dB15B9FEBdfF9C1E9d767f0' # new ProxyDtrade (ERC20)
       abi: dTrade
-      startBlock: 7529516 # creation of this proxy
+      startBlock: 7636959 # creation of this proxy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -34,9 +34,9 @@ dataSources:
     name: ProxydTradeERC20
     network: rinkeby
     source:
-      address: '0x8512EDEDb19fD937c3E9B71b71E7c487cA3Fe082' # new ProxyDtrade (ERC20)
+      address: '0x0DcD1Ee16084Eaf11dB15B9FEBdfF9C1E9d767f0' # new ProxyDtrade (ERC20)
       abi: Proxy # Requires Proxy ABI to get the TargetUpdated event
-      startBlock: 7529516 # creation of this proxy
+      startBlock: 7636959 # creation of this proxy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -56,9 +56,9 @@ dataSources:
     name: SynthsUSD
     network: rinkeby
     source:
-      address: '0x626DAeEC0D90b02C7cC38eB317EBA7732FF68d22' # ProxyERC20sUSD (new ERC20 Proxy)
+      address: '0x6C806F05d7CF6f522AC10E7d9916D0E60250B272' # ProxyERC20dUSD (new ERC20 Proxy)
       abi: Synth
-      startBlock: 7529541 # creation of this proxy
+      startBlock: 7636980 # creation of this proxy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -90,9 +90,9 @@ dataSources:
     name: SynthsETH
     network: rinkeby
     source:
-      address: '0xD67D03C3216e904C1F30beaD5F0915A94336c770' # ProxysETH (new ERC20 Proxy)
+      address: '0x46267fC6D1DF6Bf0349bB8c388024B9D1776287C' # ProxysETH (new ERC20 Proxy)
       abi: Synth
-      startBlock: 7529603
+      startBlock: 7637036
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -126,9 +126,9 @@ dataSources:
     name: RewardEscrow
     network: rinkeby
     source:
-      address: '0xd1BF77946299C4671974B2257c6bEDd0783b6960' # RewardEscrow
+      address: '0x33D20eBf540383DEb8Cf4A14bd5226baBE695ae5' # RewardEscrow
       abi: RewardEscrow
-      startBlock: 7529501
+      startBlock: 7636940
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -157,9 +157,9 @@ dataSources:
     name: FeePool
     network: rinkeby
     source:
-      address: '0x234E4bFe4570a5b7740b9A5EeE14a57C82710De8' # ProxyFeePool
+      address: '0x249dbf0982c9D5313E1275D0741992DED11Fc001' # ProxyFeePool
       abi: FeePool
-      startBlock: 7529504
+      startBlock: 7636943
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
