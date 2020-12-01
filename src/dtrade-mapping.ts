@@ -1,11 +1,11 @@
 // The latest Dtrade and event invocations
-import { dTrade as DET, Transfer as DETTransferEvent } from '../generated/dTrade_viaNewProxy/dTrade';
+import { dTrade as DET, Transfer as DETTransferEvent } from '../generated/dTrade/dTrade';
 
-import { AddressResolver } from '../generated/dTrade_viaNewProxy/AddressResolver';
+import { AddressResolver } from '../generated/dTrade/AddressResolver';
 
 import { dUSD32, dUSD4 } from './common';
 
-import { dTradeState } from '../generated/dTrade_viaNewProxy/dTradeState';
+import { dTradeState } from '../generated/dTrade/dTradeState';
 
 import { TargetUpdated as TargetUpdatedEvent } from '../generated/ProxydTradeERC20/Proxy';
 
@@ -16,7 +16,7 @@ import {
   Transfer as SynthTransferEvent,
   Issued as IssuedEvent,
   Burned as BurnedEvent
-} from '../generated/SynthsUSD_viaNewProxy/Synth';
+} from '../generated/SynthsUSD/Synth';
 
 import { FeesClaimed as FeesClaimedEvent } from '../generated/FeePool/FeePool';
 

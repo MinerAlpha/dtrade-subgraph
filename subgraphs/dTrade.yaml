@@ -4,9 +4,8 @@ repository: https://github.com/dtradeorg/dtrade-subgraph
 schema:
   file: ./dTrade.graphql
 dataSources:
-  # for the new Proxy
   - kind: ethereum/contract
-    name: dTrade_viaNewProxy # will be ignored in our mapping but needs to be unique
+    name: dTrade
     network: rinkeby
     source:
       address: '0x8512EDEDb19fD937c3E9B71b71E7c487cA3Fe082' # new ProxyDtrade (ERC20)
@@ -54,7 +53,7 @@ dataSources:
 
   # Handle Transfer on upcoming ProxysUSD Integration proxy
   - kind: ethereum/contract
-    name: SynthsUSD_viaNewProxy
+    name: SynthsUSD
     network: rinkeby
     source:
       address: '0x626DAeEC0D90b02C7cC38eB317EBA7732FF68d22' # ProxyERC20sUSD (new ERC20 Proxy)
