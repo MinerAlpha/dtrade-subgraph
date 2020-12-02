@@ -110,9 +110,17 @@ function trackDETHolder(
   block: ethereum.Block,
   txn: ethereum.Transaction
 ): void {
+  log.debug('1. Entered trackDETHolder..', [
+    detContract.toHex(),
+    account.toHex(),
+    block.number.toString(),
+    txn.hash.toHex()
+  ]);
+
   let holder = account.toHex();
   // ignore escrow accounts
   if (contracts.get('escrow') == holder || contracts.get('rewardEscrow') == holder) {
+    log.debug('2. escrow check failed..', [holder, contracts.get('escrow'), contracts.get('rewardEscrow')]);
     return;
   }
 
@@ -285,6 +293,8 @@ function trackDETHolder(
     decrementMetadata('detHolders');
   }
 
+  log.debug('3. Saving detHolder..', [detHolder.account, detHolder.balanceOf.toString()]);
+
   detHolder.save();
 }
 
@@ -344,6 +354,8 @@ export function handleTransferDET(event: DETTransferEvent): void {
   entity.timestamp = event.block.timestamp;
   entity.block = event.block.number;
   entity.save();
+
+  log.debug('in handleTransferDET', []);
 
   trackDETHolder(event.address, event.params.from, event.block, event.transaction);
   trackDETHolder(event.address, event.params.to, event.block, event.transaction);
@@ -429,32 +441,21 @@ export function handleIssuedSynths(event: IssuedEvent): void {
 
   functions.set('0xaf086c7e', 'issueMaxSynths()');
   functions.set('0x320223db', 'issueMaxSynthsOnBehalf(address)');
-  functions.set('0x8a290014', 'issueSynths(uint256)');
+  functions.set('0x8a290014', 'issueSynthsForERC20(uint256)');
   functions.set('0xe8e09b8b', 'issueSynthsOnBehalf(address,uint256');
 
-  // // Prior to Vega we had the currency key option in issuance
-  // functions.set('0xef7fae7c', 'issueMaxSynths(bytes32)'); // legacy
-  // functions.set('0x0ee54a1d', 'issueSynths(bytes32,uint256)'); // legacy
-
-  // // Prior to Sirius release, we had currency keys using bytes4
-  // functions.set('0x9ff8c63f', 'issueMaxSynths(bytes4)'); // legacy
-  // functions.set('0x49755b9e', 'issueSynths(bytes4,uint256)'); // legacy
-
-  // // Prior to v2
-  // functions.set('0xda5341a8', 'issueMaxNomins()'); // legacy
-  // functions.set('0x187cba25', 'issueNomins(uint256)'); // legacy
-
-  // so take the first four bytes of input
   let input = event.transaction.input.subarray(0, 4) as Bytes;
 
   // and for any function calls that don't match our mapping, we ignore them
   if (!functions.has(input.toHexString())) {
-    log.debug('Ignoring Issued event with input: {}, hash: {}, address: {}', [
+    log.debug('**NOT** Ignoring Issued event with input: {}, hash: {}, address: {}', [
       event.transaction.input.toHexString(),
       event.transaction.hash.toHex(),
       event.address.toHexString()
     ]);
-    return;
+
+    // Removing this for now
+    // return;
   }
 
   let entity = new Issued(event.transaction.hash.toHex() + '-' + event.logIndex.toString());
