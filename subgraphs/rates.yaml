@@ -8,9 +8,9 @@ dataSources:
     name: ExchangeRates
     network: rinkeby
     source:
-      address: '0x31684C768A023000aC09D611D18a939D2f2C8728'
+      address: '0xeaB137c673d44d18B550a9F6ECA933f1356D352E'
       abi: ExchangeRates
-      startBlock: 7636939
+      startBlock: 7647998
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4

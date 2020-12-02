@@ -12,7 +12,7 @@
     "build": "graph build",
     "build:dtrade": "graph build subgraphs/dTrade.yaml",
     "build:rates": "graph build subgraphs/rates.yaml",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token <ACCESS_TOKEN_HERE>",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token $THEGRAPH_ACCESS_TOKEN",
     "deploy:dtrade": "npm run deploy -- dtrade-team/dtrade subgraphs/dTrade.yaml",
     "deploy:rates": "npm run deploy -- dtrade-team/dtradeRates subgraphs/rates.yaml"
   },
