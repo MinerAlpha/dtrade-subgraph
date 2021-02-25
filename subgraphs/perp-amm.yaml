@@ -22,6 +22,11 @@ dataSources:
         - name: ClearingHouse
           file: ../abis/perp-amm/ClearingHouse.json
       eventHandlers:
-        # - event: Transfer(indexed address,indexed address,uint256)
+        - event: PositionAdjusted(indexed address,indexed address,int256,uint256,uint256)
+          handler: handlePositionAdjusted
+        - event: PositionSettled(indexed address,indexed address,uint256)
+          handler: handlePositionSettled
         - event: PositionChanged(indexed address,indexed address,uint256,uint256,int256,uint256,int256,int256,int256,uint256,uint256,uint256,int256)
-          handler: handleTransferDET
+          handler: handlePositionChanged
+        - event: PositionLiquidated(indexed address,indexed address,uint256,uint256,uint256,address,uint256)
+          handler: handlePositionLiquidated

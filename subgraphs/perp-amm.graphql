@@ -1,3 +1,21 @@
+type PositionAdjusted @entity {
+  id: ID!
+  trader: Bytes! # address
+  amm: Bytes! # address
+  newPositionSize: BigInt!
+  oldLiquidityIndex: BigInt!
+  newLiquidityIndex: BigInt!
+  timestamp: BigInt
+}
+
+type PositionSettled @entity {
+  id: ID!
+  trader: Bytes! # address
+  amm: Bytes! # address
+  valueTransferred: BigInt!
+  timestamp: BigInt
+}
+
 type PositionChanged @entity {
   id: ID!
   trader: Bytes! # address
@@ -13,5 +31,16 @@ type PositionChanged @entity {
   liquidationPenalty: BigInt!
   spotPrice: BigInt!
   fundingPayment: BigInt!
+  timestamp: BigInt
+}
+
+type PositionLiquidated @entity {
+  id: ID!
+  trader: Bytes! # address
+  amm: Bytes! # address
+  positionNotional: BigInt!
+  positionSize: BigInt!
+  liquidationFee: BigInt!
+  liquidator: Bytes! # address
   timestamp: BigInt
 }
