@@ -9,12 +9,15 @@
     "codegen": "node prepare-abis && graph codegen",
     "codegen:dtrade": "npm run codegen -- subgraphs/dTrade.yaml",
     "codegen:rates": "npm run codegen -- subgraphs/rates.yaml",
+    "codegen:perp-amm": "npm run codegen -- subgraphs/perp-amm.yaml",
     "build": "graph build",
     "build:dtrade": "graph build subgraphs/dTrade.yaml",
     "build:rates": "graph build subgraphs/rates.yaml",
+    "build:perp-amm": "graph build subgraphs/perp-amm.yaml",
     "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token $THEGRAPH_ACCESS_TOKEN",
     "deploy:dtrade": "npm run deploy -- dtrade-team/dtrade subgraphs/dTrade.yaml",
-    "deploy:rates": "npm run deploy -- dtrade-team/dtradeRates subgraphs/rates.yaml"
+    "deploy:rates": "npm run deploy -- dtrade-team/dtradeRates subgraphs/rates.yaml",
+    "deploy:perp-amm": "npm run deploy -- dtrade-team/PerpetualAMM subgraphs/perp-amm.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "git://github.com/graphprotocol/graph-cli.git#ebeeba0009f026bacf940f25ee7b875fe7676032",

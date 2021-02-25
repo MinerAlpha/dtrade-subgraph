@@ -1,0 +1,17 @@
+type PositionChanged @entity {
+  id: ID!
+  trader: Bytes! # address
+  amm: Bytes! # address
+  margin: BigInt!
+  positionNotional: BigInt!
+  exchangedPositionSize: BigInt!
+  fee: BigInt!
+  positionSizeAfter: BigInt!
+  realizedPnl: BigInt!
+  unrealizedPnlAfter: BigInt!
+  badDebt: BigInt!
+  liquidationPenalty: BigInt!
+  spotPrice: BigInt!
+  fundingPayment: BigInt!
+  timestamp: BigInt
+}
