@@ -20,7 +20,7 @@
     "deploy:dtrade": "npm run deploy -- dtrade-team/dtrade subgraphs/dTrade.yaml",
     "deploy:rates": "npm run deploy -- dtrade-team/dtradeRates subgraphs/rates.yaml",
     "deploy:perp-amm": "npm run deploy -- dtrade-team/PerpetualAMM subgraphs/perp-amm.yaml",
-    "deploy:perp": "npm run deploy -- dtrade-team/PerpetualAMM subgraphs/perp.yaml"
+    "deploy:perp": "npm run deploy -- dtrade-team/Perpetual subgraphs/perp.yaml"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "git://github.com/graphprotocol/graph-cli.git#ebeeba0009f026bacf940f25ee7b875fe7676032",

@@ -1,0 +1,12 @@
+type Trade @entity {
+  id: ID!
+  maker: Bytes! # address
+  taker: Bytes! # address
+  trader: Bytes! # address
+  marginAmount: BigInt!
+  positionAmount: BigInt!
+  isBuy: Boolean!
+  makerBalance: Bytes
+  takerBalance: Bytes
+  timestamp: BigInt
+}

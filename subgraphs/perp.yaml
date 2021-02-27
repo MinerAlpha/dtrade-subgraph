@@ -1,0 +1,26 @@
+specVersion: 0.0.2
+description: dTrade Perpetuals API
+repository: https://github.com/dtradeorg/dtrade-subgraph
+schema:
+  file: ./perp.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: PerpetualV1
+    network: rinkeby
+    source:
+      address: '0x0A4e403cD24C102e29108e25A7b901bCEDc57485' # PerpetualProxy
+      abi: PerpetualV1
+      startBlock: 8140943 # creation of this contract
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/perp-mapping.ts
+      entities:
+        - Trade
+      abis:
+        - name: PerpetualV1
+          file: ../abis/perp/PerpetualV1.json
+      eventHandlers:
+        - event: LogTrade(indexed address,indexed address,address,uint256,uint256,bool,bytes32,bytes32)
+          handler: handleLogTrade
