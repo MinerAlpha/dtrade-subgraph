@@ -20,17 +20,17 @@ type PositionChanged @entity {
   id: ID!
   trader: Bytes! # address
   amm: Bytes! # address
-  margin: BigInt!
-  positionNotional: BigInt!
-  exchangedPositionSize: BigInt!
-  fee: BigInt!
-  positionSizeAfter: BigInt!
-  realizedPnl: BigInt!
-  unrealizedPnlAfter: BigInt!
-  badDebt: BigInt!
-  liquidationPenalty: BigInt!
-  spotPrice: BigInt!
-  fundingPayment: BigInt!
+  margin: BigDecimal!
+  positionNotional: BigDecimal!
+  exchangedPositionSize: BigDecimal!
+  fee: BigDecimal!
+  positionSizeAfter: BigDecimal!
+  realizedPnl: BigDecimal!
+  unrealizedPnlAfter: BigDecimal!
+  badDebt: BigDecimal!
+  liquidationPenalty: BigDecimal!
+  spotPrice: BigDecimal!
+  fundingPayment: BigDecimal!
   timestamp: BigInt
 }
 
@@ -43,4 +43,12 @@ type PositionLiquidated @entity {
   liquidationFee: BigInt!
   liquidator: Bytes! # address
   timestamp: BigInt
+}
+
+type AveragePosition @entity {
+  id: ID! # tradeAddr + ammAddr
+  avgEntryPrice: BigDecimal!
+  avgLeverage: BigDecimal!
+  totalMargin: BigDecimal!
+  size: BigDecimal!
 }
