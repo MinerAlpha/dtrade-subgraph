@@ -51,4 +51,7 @@ type AveragePosition @entity {
   avgLeverage: BigDecimal!
   totalMargin: BigDecimal!
   size: BigDecimal!
+  lastPrice: BigDecimal!
+  lastPositionSize: BigDecimal!
+  notional: BigDecimal!
 }
