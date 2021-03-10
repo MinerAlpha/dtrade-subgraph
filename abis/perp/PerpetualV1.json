@@ -47,6 +47,62 @@
       },
       {
         "indexed": false,
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogBankDeposit",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "destination",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "name": "LogBankWithdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
         "internalType": "bytes32",
         "name": "balance",
         "type": "bytes32"
@@ -214,6 +270,12 @@
         "internalType": "bytes32",
         "name": "takerBalance",
         "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes32",
+        "name": "metadata",
+        "type": "bytes32"
       }
     ],
     "name": "LogTrade",
@@ -299,6 +361,26 @@
     "constant": false,
     "inputs": [
       {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositToBank",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
         "internalType": "uint256",
         "name": "priceLowerBound",
         "type": "uint256"
@@ -352,6 +434,27 @@
         "internalType": "struct Types.Balance",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getAccountBankBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -750,6 +853,11 @@
             "internalType": "bytes",
             "name": "data",
             "type": "bytes"
+          },
+          {
+            "internalType": "bytes32",
+            "name": "metadata",
+            "type": "bytes32"
           }
         ],
         "internalType": "struct Trade.TradeArg[]",
@@ -792,6 +900,31 @@
     "constant": false,
     "inputs": [],
     "name": "withdrawFinalSettlement",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "destination",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "withdrawFromBank",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
