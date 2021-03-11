@@ -100,78 +100,36 @@ export function handlePositionChanged(event: PositionChangedEvent): void {
     }
 
     // for first entry:
-    log.debug('****1****', []);
     let newAvgPosition = new AveragePosition(entity.trader.toHex() + '-' + entity.amm.toHex());
 
+    log.debug('****1****', []);
     newAvgPosition.lastPositionSize = entity.exchangedPositionSize;
 
-    // avgLeverage = positionNotional/margin
-    log.debug('****2****', []);
-    log.debug(
-      '****2.25**** posNot: ' + entity.positionNotional.toString() + ' | margin:' + entity.margin.toString(),
-      []
-    );
-    log.debug('***2.5***' + entity.positionNotional.div(entity.margin).toString(), []);
-
-    newAvgPosition.avgLeverage = entity.positionNotional.div(entity.margin.minus(oldAvgPosition.totalMargin));
-
-    // if (newAvgPosition.avgLeverage < BigDecimal.fromString('0')) {
-    //   log.debug('SHORT: making new.avgLvg +ve', []);
-    //   newAvgPosition.avgLeverage = BigDecimal.fromString('-1').times(newAvgPosition.avgLeverage);
-    //   log.debug('Made new.avgLvg +ve', []);
-    // }
-    // .times(BigInt.fromI32(1e18 as i32));
-
     // new.lastPrice = 1/(exchangedPositionSize/positionNotional)
-    log.debug('****3****', []);
-    newAvgPosition.lastPrice = BigDecimal.fromString('1').div(
-      entity.exchangedPositionSize.div(entity.positionNotional)
-    );
+    log.debug('****2****', []);
+    newAvgPosition.lastPrice = entity.positionNotional.div(entity.exchangedPositionSize);
 
+    log.debug('****3****', []);
     newAvgPosition.notional = oldAvgPosition.notional.plus(entity.positionNotional);
 
     // size = exchangedPositionSize
     log.debug('****4****', []);
-    newAvgPosition.size = entity.exchangedPositionSize;
+    newAvgPosition.size = entity.positionSizeAfter;
 
     // totalMargin = margin
     log.debug('****5****', []);
     newAvgPosition.totalMargin = entity.margin;
 
-    // ===final formulae===:
-
+    // avgLeverage = positionNotional/margin
     log.debug('****6****', []);
-    // avgLeverage =  ((old size * old avg leverage)  + (new size * positionNotional/(margin - old_margin))) / (old size + new size)
-    // newAvgPosition.avgLeverage = oldAvgPosition.size
-    //   .times(oldAvgPosition.avgLeverage)
-    //   .plus(newAvgPosition.size.times(newAvgPosition.avgLeverage));
-
-    // log.debug('part1 b4 div: ' + newAvgPosition.avgLeverage.toString(), []);
-    // newAvgPosition.avgLeverage = newAvgPosition.avgLeverage.div(oldAvgPosition.size.plus(newAvgPosition.size));
-    // log.debug('part2: aftr div' + newAvgPosition.avgLeverage.toString(), []);
-
     newAvgPosition.avgLeverage = newAvgPosition.notional.div(entity.margin);
 
+    // avgEntryPrice = ((old size * old avg entry price)  + (new size * exchangedPositionSize/positionNotional)) / (cumulative size)
     log.debug('****7****: ', []);
-    // avgEntryPrice = ((old size * old avg entry price)  + (new size * exchangedPositionSize/positionNotional)) / (old size + new size)
-
     newAvgPosition.avgEntryPrice = oldAvgPosition.size
       .times(oldAvgPosition.avgEntryPrice)
-      .plus(newAvgPosition.size.times(newAvgPosition.lastPrice))
-      .div(oldAvgPosition.size.plus(newAvgPosition.size));
-
-    log.debug('****8****: emit.exgPosSize:', []);
-
-    // size = old size + exchangedPositionSize
-    // newAvgPosition.size = oldAvgPosition.size.plus(entity.exchangedPositionSize);
-    newAvgPosition.size = entity.positionSizeAfter;
-
-    log.debug('****9****', []);
-
-    // totalMargin = new margin
-    newAvgPosition.totalMargin = entity.margin;
-
-    log.debug('****10****', []);
+      .plus(entity.exchangedPositionSize.times(newAvgPosition.lastPrice))
+      .div(entity.positionSizeAfter);
 
     newAvgPosition.save();
 

@@ -22,6 +22,20 @@ type Trade @entity {
   makerBalance: Bytes
   takerBalance: Bytes
   metadata: Bytes
-  extendedParams: [BigDecimal!]
+  makerAmountToDeposit: BigDecimal!
+  takerAmountToDeposit: BigDecimal!
+  makerLeverage: BigDecimal!
+  takerLeverage: BigDecimal!
   timestamp: BigInt
+}
+
+type Average @entity {
+  id: ID! # tradeAddr
+  avgEntryPrice: BigDecimal!
+  avgLeverage: BigDecimal!
+  totalMargin: BigDecimal!
+  size: BigDecimal!
+  lastPrice: BigDecimal!
+  lastPositionSize: BigDecimal!
+  notional: BigDecimal!
 }

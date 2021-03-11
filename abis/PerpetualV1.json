@@ -435,6 +435,11 @@
             "type": "bytes"
           },
           {
+            "internalType": "bool",
+            "name": "isBuy",
+            "type": "bool"
+          },
+          {
             "internalType": "bytes32",
             "name": "metadata",
             "type": "bytes32"
@@ -972,6 +977,11 @@
             "internalType": "bytes",
             "name": "data",
             "type": "bytes"
+          },
+          {
+            "internalType": "bool",
+            "name": "isBuy",
+            "type": "bool"
           },
           {
             "internalType": "bytes32",

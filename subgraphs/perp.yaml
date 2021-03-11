@@ -8,9 +8,9 @@ dataSources:
     name: PerpetualV1
     network: rinkeby
     source:
-      address: '0x5EC6DD9575A43Af34cbcB8D5dbA842AB750532f0' # PerpetualProxy
+      address: '0xa2Fd79DC926f7E005AFC46D7bEe7e98F58683A41' # PerpetualProxy
       abi: PerpetualV1
-      startBlock: 8208941 # creation of this contract
+      startBlock: 8215108 # creation of this contract
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
