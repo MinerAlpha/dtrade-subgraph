@@ -3,7 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const { gray, yellow } = require('chalk');
+const { gray, yellow, green, red } = require('chalk');
 const program = require('commander');
 
 const doesEntryHaveMultidimensionalArrays = ({ type }) => /\[[0-9]*\]\[[0-9]*\]/.test(type);
@@ -17,9 +17,10 @@ program.action(async () => {
 
   sources.forEach((contractName) => {
     // Read the JSON content for the file
-    let { abi } = JSON.parse(fs.readFileSync(path.join(abiPath, contractName), 'utf8'));
+    let abi = JSON.parse(fs.readFileSync(path.join(abiPath, contractName), 'utf8'));
 
     if (!abi) {
+      console.log(red(`Unable to parse ABI for contract: ${contractName}!`));
       return;
     }
 
@@ -37,6 +38,8 @@ program.action(async () => {
         )
       );
       abi = abi.filter((entry) => entry.name !== name);
+    } else {
+      console.log(green('✔') + ` Didn't find any multidimensional array in ABI (${contractName})`);
     }
 
     // Write the ABI to file

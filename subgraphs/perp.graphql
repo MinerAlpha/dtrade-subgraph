@@ -1,3 +1,16 @@
+# event LogTradeExtended(
+#        address indexed maker,
+#        address indexed taker,
+#        address trader,
+#        uint256 marginAmount,
+#        uint256 positionAmount,
+#        bool isBuy, // from taker's perspective
+#        bytes32 makerBalance,
+#        bytes32 takerBalance,
+#        bytes32 metadata,
+#        uint256[] extendedParams
+#    );
+
 type Trade @entity {
   id: ID!
   maker: Bytes! # address
@@ -8,5 +21,7 @@ type Trade @entity {
   isBuy: Boolean!
   makerBalance: Bytes
   takerBalance: Bytes
+  metadata: Bytes
+  extendedParams: [BigDecimal!]
   timestamp: BigInt
 }

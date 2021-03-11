@@ -18,5 +18,7 @@ export function handleLogTrade(event: TradeEvent): void {
   entity.timestamp = event.block.timestamp;
   entity.save();
 
+  // event.params.extendedParams
+
   log.debug('Finished handleLogTrade', []);
 }
