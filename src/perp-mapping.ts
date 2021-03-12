@@ -39,7 +39,8 @@ export function handleLogTrade(event: TradeEvent): void {
     BigIntToBigDecimal(entity.positionAmount),
     !entity.isBuy,
     entity.makerAmountToDeposit,
-    entity.makerLeverage
+    entity.makerLeverage,
+    event.block.timestamp
   );
   makerAvg.save();
   log.debug('Saved makerAvg', []);
@@ -50,7 +51,8 @@ export function handleLogTrade(event: TradeEvent): void {
     BigIntToBigDecimal(entity.positionAmount),
     entity.isBuy,
     entity.takerAmountToDeposit,
-    entity.takerLeverage
+    entity.takerLeverage,
+    event.block.timestamp
   );
   takerAvg.save();
   log.debug('Saved takerAvg', []);
@@ -64,7 +66,8 @@ function calculateAverage(
   positionAmount: BigDecimal,
   isBuy: boolean,
   myDepositedAmount: BigDecimal,
-  leverage: BigDecimal
+  leverage: BigDecimal,
+  timestamp: BigInt
 ): Average {
   let oldAvg = Average.load(address.toHex());
   const positionNotional = marginAmount;
@@ -79,6 +82,7 @@ function calculateAverage(
     oldAvg.lastPrice = BigDecimal.fromString('0');
     oldAvg.lastPositionSize = BigDecimal.fromString('0');
     oldAvg.notional = BigDecimal.fromString('0');
+    oldAvg.totalDepositedAmount = BigDecimal.fromString('0');
   }
 
   const newAvg = new Average(address.toHex());
@@ -105,19 +109,18 @@ function calculateAverage(
     newAvg.lastPrice = BigDecimal.fromString('0');
     newAvg.lastPositionSize = BigDecimal.fromString('0');
     newAvg.notional = BigDecimal.fromString('0');
+    newAvg.totalDepositedAmount = BigDecimal.fromString('0');
   } else {
     newAvg.lastPositionSize = positionAmount;
     newAvg.lastPrice = positionNotional.div(positionAmount);
     newAvg.notional = oldAvg.notional.plus(positionNotional);
-    // newAvg.size = oldAvg.size.plus(positionAmount);
-
-    // newAvg.totalMargin = oldAvg.totalMargin.plus(marginAmount);
     newAvg.avgLeverage = newAvg.notional.div(newAvg.totalMargin);
-
+    newAvg.totalDepositedAmount = oldAvg.totalDepositedAmount.plus(myDepositedAmount);
+    newAvg.timestamp = timestamp;
     // Take absolute leverage
     newAvg.avgLeverage = absolute(newAvg.avgLeverage);
 
-    // Take absolute size - size could be negative
+    // Take absolute - size could be negative
     newAvg.avgEntryPrice = absolute(
       absolute(oldAvg.size)
         .times(oldAvg.avgEntryPrice)
@@ -135,7 +138,3 @@ function BigIntToBigDecimal(num: BigInt): BigDecimal {
 function absolute(num: BigDecimal): BigDecimal {
   return num.lt(BigDecimal.fromString('0')) ? num.neg() : num;
 }
-
-// function absolute(num: BigInt): BigInt {
-//   return num.lt(BigInt.fromI32(0)) ? num.neg() : num;
-// }
