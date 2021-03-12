@@ -16,7 +16,7 @@
     "build:rates": "graph build subgraphs/rates.yaml",
     "build:perp-amm": "graph build subgraphs/perp-amm.yaml",
     "build:perp": "graph build subgraphs/perp.yaml",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token $THE_GRAPH_ACCESS_TOKEN",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ --access-token ",
     "deploy:dtrade": "npm run deploy -- dtrade-team/dtrade subgraphs/dTrade.yaml",
     "deploy:rates": "npm run deploy -- dtrade-team/dtradeRates subgraphs/rates.yaml",
     "deploy:perp-amm": "npm run deploy -- dtrade-team/PerpetualAMM subgraphs/perp-amm.yaml",

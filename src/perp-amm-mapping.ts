@@ -108,6 +108,7 @@ export function handlePositionChanged(event: PositionChangedEvent): void {
     newAvgPosition.lastPrice = absolute(entity.positionNotional.div(entity.exchangedPositionSize));
 
     log.debug('****3****', []);
+
     if (
       oldAvgPosition.cumulativeSize.equals(BigDecimal.fromString('0')) ||
       (entity.exchangedPositionSize.lt(BigDecimal.fromString('0')) &&
@@ -120,7 +121,7 @@ export function handlePositionChanged(event: PositionChangedEvent): void {
       );
     } else {
       newAvgPosition.cumulativePositionNotional = absolute(
-        oldAvgPosition.cumulativePositionNotional.plus(entity.positionNotional)
+        oldAvgPosition.cumulativePositionNotional.minus(entity.positionNotional)
       );
     }
 
@@ -138,10 +139,12 @@ export function handlePositionChanged(event: PositionChangedEvent): void {
 
     // avgEntryPrice = ((old size * old avg entry price)  + (new size * exchangedPositionSize/positionNotional)) / (cumulative size)
     log.debug('****7****: ', []);
-    newAvgPosition.avgEntryPrice = oldAvgPosition.cumulativeSize
-      .times(oldAvgPosition.avgEntryPrice)
-      .plus(entity.exchangedPositionSize.times(newAvgPosition.lastPrice))
-      .div(newAvgPosition.cumulativeSize);
+    newAvgPosition.avgEntryPrice = absolute(
+      oldAvgPosition.cumulativeSize
+        .times(oldAvgPosition.avgEntryPrice)
+        .plus(entity.exchangedPositionSize.times(newAvgPosition.lastPrice))
+        .div(newAvgPosition.cumulativeSize)
+    );
 
     newAvgPosition.save();
 

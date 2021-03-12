@@ -8,9 +8,9 @@ dataSources:
     name: ClearingHouse
     network: rinkeby
     source:
-      address: '0x1643a4b5D2a346A5F733e19618fdad64c1824ef0' # ClearingHouse
+      address: '0x0add929E1D544E52CaBA0a5d3e5E47F36663Ef83' # ClearingHouse
       abi: ClearingHouse
-      startBlock: 8210506 # creation of this contract
+      startBlock: 8134892 # creation of this contract
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
