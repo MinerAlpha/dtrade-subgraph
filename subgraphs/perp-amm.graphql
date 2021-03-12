@@ -49,9 +49,9 @@ type AveragePosition @entity {
   id: ID! # tradeAddr + ammAddr
   avgEntryPrice: BigDecimal!
   avgLeverage: BigDecimal!
-  totalMargin: BigDecimal!
-  size: BigDecimal!
+  cumulativeMargin: BigDecimal!
+  cumulativeSize: BigDecimal!
+  cumulativePositionNotional: BigDecimal!
   lastPrice: BigDecimal!
   lastPositionSize: BigDecimal!
-  notional: BigDecimal!
 }
