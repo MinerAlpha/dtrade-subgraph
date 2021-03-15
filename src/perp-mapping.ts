@@ -83,6 +83,7 @@ function calculateAverage(
     oldAvg.lastPositionSize = BigDecimal.fromString('0');
     oldAvg.notional = BigDecimal.fromString('0');
     oldAvg.totalDepositedAmount = BigDecimal.fromString('0');
+    oldAvg.cumulativeSize = BigDecimal.fromString('0');
   }
 
   const newAvg = new Average(address.toHex());
@@ -110,22 +111,28 @@ function calculateAverage(
     newAvg.lastPositionSize = BigDecimal.fromString('0');
     newAvg.notional = BigDecimal.fromString('0');
     newAvg.totalDepositedAmount = BigDecimal.fromString('0');
+    newAvg.cumulativeSize = BigDecimal.fromString('0');
   } else {
+    // newAvg.totalMargin = oldAvg.totalMargin.plus(marginAmount);
     newAvg.lastPositionSize = positionAmount;
     newAvg.lastPrice = positionNotional.div(positionAmount);
     newAvg.notional = oldAvg.notional.plus(positionNotional);
-    newAvg.avgLeverage = newAvg.notional.div(newAvg.totalMargin);
     newAvg.totalDepositedAmount = oldAvg.totalDepositedAmount.plus(myDepositedAmount);
+    newAvg.avgLeverage = newAvg.notional.div(newAvg.totalDepositedAmount);
+
     newAvg.timestamp = timestamp;
+
+    newAvg.cumulativeSize = oldAvg.cumulativeSize.plus(positionAmount);
+
     // Take absolute leverage
     newAvg.avgLeverage = absolute(newAvg.avgLeverage);
 
     // Take absolute - size could be negative
     newAvg.avgEntryPrice = absolute(
-      absolute(oldAvg.size)
+      absolute(oldAvg.cumulativeSize)
         .times(oldAvg.avgEntryPrice)
         .plus(positionAmount.times(newAvg.lastPrice))
-        .div(absolute(newAvg.size))
+        .div(absolute(newAvg.cumulativeSize))
     );
   }
   return newAvg;

@@ -22,6 +22,7 @@ type Average @entity {
   avgLeverage: BigDecimal!
   totalMargin: BigDecimal!
   size: BigDecimal!
+  cumulativeSize: BigDecimal!
   lastPrice: BigDecimal!
   lastPositionSize: BigDecimal!
   notional: BigDecimal!
