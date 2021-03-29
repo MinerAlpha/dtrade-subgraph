@@ -12,6 +12,8 @@ Subgraphs availabe:
 
 Run `npm run codegen:[subgraph]` to generate the TS types.
 
-Run the npm run build:[subgraph] task for the subgraph.
+Run `npm run build:[subgraph]` task for the subgraph.
 
-Deploy via npm run deploy:[subgraph]. Note: requires env variable of $THEGRAPH_ACCESS_TOKEN set in bash to work.
+Deploy via `npm run deploy:[subgraph]`. 
+
+Note: requires env variable of `$THEGRAPH_ACCESS_TOKEN` set in bash to work.
