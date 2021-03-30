@@ -3,10 +3,10 @@ This repo houses the dTrade subgraphs on The Graph
 
 
 Subgraphs availabe: 
-- dtrade (dtrade Stakr)
-- rates (exchange rates for Stakr)
-- perp-amm (Perpetuals on AMM)
-- perp (Perpetuals on Orderbook)
+- [dtrade (dtrade Stakr)](https://thegraph.com/explorer/subgraph/dtrade-team/dtrade) (deprecated)
+- [rates (exchange rates for Stakr)](https://thegraph.com/explorer/subgraph/dtrade-team/dtraderates) (deprecated)
+- [perp-amm (Perpetuals on AMM)](https://thegraph.com/explorer/subgraph/dtrade-team/perpetualamm)
+- [perp (Perpetuals on Orderbook)](https://thegraph.com/explorer/subgraph/dtrade-team/perpetual)
 
 # How to use
 
